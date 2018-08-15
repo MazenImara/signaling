@@ -1,0 +1,24 @@
+{
+  "name": "signaling",
+  "version": "1.0.0",
+  "description": "signaling server for webRtc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MazenImara/signaling.git"
+  },
+  "author": "Mazen Imara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MazenImara/signaling/issues"
+  },
+  "homepage": "https://github.com/MazenImara/signaling#readme",
+  "dependencies": {
+    "node-static": "^0.7.10",
+    "socket.io": "^2.1.1",
+    "socketio-wildcard": "^2.0.0"
+  }
+}
