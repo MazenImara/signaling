@@ -57,11 +57,10 @@ io.sockets.on('connection', function(socket) {
       // io.sockets.in(room).emit('join', room);
       socket.join(room);
       socket.emit('joined', room, socket.id);
-      io.sockets.in(room).emit('ready', room);
-      socket.broadcast.emit('ready', room);
     } else { // max two clients
       socket.emit('full', room);
     }
+    socket.broadcast.emit('getRooms', socket.adapter.rooms);
   });
 
   socket.on('leaveRoom', function(room) {
@@ -69,5 +68,29 @@ io.sockets.on('connection', function(socket) {
     socket.emit('leaveRoom', room);
   });
 
+  socket.on('message', function(message) {
+    socket.to(room).emit('message', message);
+  });
+
+  socket.on('ipaddr', function() {
+    var ifaces = os.networkInterfaces();
+    for (var dev in ifaces) {
+      ifaces[dev].forEach(function(details) {
+        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+          socket.emit('ipaddr', details.address);
+        }
+      });
+    }
+  });
+
+  socket.on('disconnect', function(reason) {
+    console.log(`Peer or server disconnected. Reason: ${reason}.`);
+    socket.broadcast.emit('bye');
+  });
+
+  socket.on('bye', function(room) {
+    console.log(`Peer said bye on room ${room}.`);
+    socket.leave(room);
+  });
 
 });// end of io socket
