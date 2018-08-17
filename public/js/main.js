@@ -7,9 +7,13 @@ $(document).ready(function(){
   var conRoom =basicRoom;
   var socket = io.connect();
 
+
   $('.cmdBtn').click(function(event) {
     if ($(this).val() == 'openCam') {
       createPeerConnection(false, config);
+    }
+    if ($(this).val() == 'closeCam') {
+      peerConn.close();
     }
   	socket.emit('cmd', $(this).val());
   });
@@ -20,7 +24,11 @@ $(document).ready(function(){
   });
 
   $('#getRoomsBtn').click(function(event) {
-  	socket.emit('getRooms');
+    socket.emit('getRooms');
+  });
+
+  $('#createRoomBtn').click(function(event) {
+    socket.emit('createRoom');
   });
 
   socket.on('getRooms', function(rooms) {
@@ -35,11 +43,13 @@ $(document).ready(function(){
     })
   });
 
-	socket.on('created', function(room, clientId) {
-	  console.log('Created room', room, '- my client ID is', clientId);
-	  
-   
-	});
+  socket.on('created', function(room, clientId) {
+    console.log('Created room', room, '- my client ID is', clientId);
+  });
+
+  socket.on('createRoom', function() {
+    alert('create room')
+  });
 
 	socket.on('joined', function(room, clientId) {
 	  console.log('This peer has joined room', room, 'with client ID', clientId);

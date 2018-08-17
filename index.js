@@ -88,6 +88,10 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('bye');
   });
 
+  socket.on('createRoom', function() {
+    socket.broadcast.emit('createRoom');
+  });
+
   socket.on('bye', function(room) {
     console.log(`Peer said bye on room ${room}.`);
     socket.leave(room);
