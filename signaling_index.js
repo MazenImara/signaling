@@ -10,8 +10,8 @@ var middleware = require('socketio-wildcard')();
 var https = require('https');
 var fs = require("fs");
 var options = {
-  key: fs.readFileSync('/home/jony/myssl/key.pem'),
-  cert: fs.readFileSync('/home/jony/myssl/cert.pem')
+  key: fs.readFileSync('/etc/myssl/key.pem'),
+  cert: fs.readFileSync('/etc/myssl/cert.pem')
 };
 //end https
 
