@@ -223,6 +223,10 @@ $(document).ready(function(){
     remoteStream = event.stream;
 
   }
+  // new for robot
+  $('#do').click(function(event) {
+    socket.emit('cmd', $('#cmdTxt').val());
+  });
 
 
 }); //emd of jquery 
