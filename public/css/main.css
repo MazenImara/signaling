@@ -1,3 +1,48 @@
-body {
-	color: red;
+
+
+.remoteVideo{
+	border: 1px solid red;
+	width: 100%;
+}
+
+.robotCmdBtn{
+	font-size: 75px;
+	position: relative;
+}
+
+.dir-div{
+    position: absolute;
+    left: -46px;
+}
+
+.up{
+	left: 125px;
+}
+
+.down{
+	top: 150px;
+}
+.stop{
+  font-size: 35px;
+  top: 61px;
+  left: -118px;
+}
+.left ,.right{
+	top: 78px;
+} 
+
+
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+    color: blue;
+  }
+
+	.remoteVideo{
+		border: 1px solid red;
+		width: 100%;
+	}
+
+
 }

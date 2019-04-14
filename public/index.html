@@ -2,15 +2,34 @@
 <html>
 <head>
 	<title>Page Title</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/main.css" />
 	<script src="/js/lib/jquery.v3.3.1.js"></script>
 	  <script src="/socket.io/socket.io.js"></script> 
   		<script src="js/lib/adapter.js"></script>
 	<script src="/js/main.js"></script>
+	<script src="/js/extra.js"></script>
 </head>
 <body>
 
-	<button class="cmdBtn" value="openCam">Front cam</button>
+
+
+	<div>
+		<video id="remoteVideo" class="remoteVideo" autoplay></video>
+		<div class="dir-div">
+			<button class="robotCmdBtn up" value="forward"><i class="fas fa-angle-up"></i></button>
+			<button class="robotCmdBtn left" value="left"><i class="fas fa-angle-left"></i></button>
+			<button class="robotCmdBtn down" value="back"><i class="fas fa-angle-down"></i></button>
+			<button class="robotCmdBtn right" value="right"><i class="fas fa-angle-right"></i></button>
+			<button class="robotCmdBtn stop" value="stop"><i class="fas fa-circle"></i></button>
+		</div>
+	</div>
+
+
+
+
+	<button class="cmdBtn" value="openFrontCam">Front cam</button>
 	<button class="cmdBtn" value="openBackCam">Back cam</button>
 	<button class="cmdBtn" value="closeCam">close cam</button>
 	<button id="getRoomsBtn">get rooms</button>
@@ -21,6 +40,7 @@
 
 	
   	<div id="conRoomDiv"></div>
+
   	<div id="roomsDiv"></div>
 
 
@@ -29,7 +49,7 @@
 
 
 
-    <video id="remoteVideo" autoplay></video>
+    
 
 
 

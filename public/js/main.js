@@ -2,14 +2,28 @@
 
 $(document).ready(function(){
 
- 
-  var basicRoom = prompt("Please enter your name", "");
-  var conRoom =basicRoom;
-  var socket = io.connect();
-
+  $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null){
+         return null;
+      }
+      else{
+         return results[1] || 0;
+      }
+  }
+  var conRoom = $.urlParam('roomName');
+  if (!conRoom) {
+    var basicRoom = prompt("Please enter your name", "");
+    conRoom =basicRoom; 
+  }
+  
+  var socket = io.connect();  
+  // Joining a room.
+  socket.emit('create or join', conRoom);
+  socket.on('createRoom', function(){ socket.emit('create or join', 'robot.1'); })
 
   $('.cmdBtn').click(function(event) {
-    if ($(this).val() == 'openCam') {
+    if ($(this).val() == 'openFrontCam') {
       createPeerConnection(false, config);
     }
     if ($(this).val() == 'closeCam') {
@@ -17,9 +31,16 @@ $(document).ready(function(){
     }
   	socket.emit('cmd', $(this).val());
   });
+  
+
+  var interval;
+  $('.robotCmdBtn').click(function(event) {
+    socket.emit('cmd', $(this).val());
+  });
+
 
   socket.on('cmd', function(cmd) {
-    if (cmd == 'openCam') {openCam();}
+    if (cmd == 'openFrontCam') {openCam();}
     if (cmd == 'closeCam') {closeCam();}
   });
 
@@ -47,10 +68,6 @@ $(document).ready(function(){
     console.log('Created room', room, '- my client ID is', clientId);
   });
 
-  socket.on('createRoom', function() {
-    alert('create room')
-  });
-
 	socket.on('joined', function(room, clientId) {
 	  console.log('This peer has joined room', room, 'with client ID', clientId);
     
@@ -60,9 +77,7 @@ $(document).ready(function(){
 	socket.on('full', function(room) {
 	  alert('Room ' + room + ' is full. We will create a new room for you.');
 	  
-	});  
-	// Joining a room.
-  socket.emit('create or join', basicRoom);
+	});
 
 
   socket.on('leaveRoom', function(room) {
@@ -219,7 +234,8 @@ $(document).ready(function(){
 
   function handleRemoteStreamAdded(event) {
     console.log('Remote stream added.');
-    remoteVideo.src = window.URL.createObjectURL(event.stream);
+    //remoteVideo.src = window.URL.createObjectURL(event.stream);
+    remoteVideo.srcObject = event.stream;
     remoteStream = event.stream;
 
   }
